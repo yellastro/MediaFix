@@ -25,73 +25,6 @@ public class SongCorrector
 	static ArrayList<ListItem> items=new ArrayList<>();
 	
 	
-	
-	static public BaseAdapter  loadBase(Activity activity)
-	{
-		String[] from = {
-			MediaStore.MediaColumns.TITLE,MediaStore.MediaColumns.DATA};
-		int[] to = {
-			R.id.name,R.id.autor_list};
-
-		cursor = activity.getContentResolver().query(
-			MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-			null,
-			"_data LIKE ?",
-			new String[] {"/storage/sdcard0/Music/sets%"},
-			MediaStore.Audio.Media.DATA);
-		
-		//String[] tables=new String[20];
-		
-		/*for (int i=0;i<20;i++)
-		{
-			String tables=
-			cursor.getString(cursor.getColumnIndex( MediaStore.Audio.Media.TITLE ));
-		/*Toast.makeText(activity,//Integer.toString(
-					   tables,Toast.LENGTH_LONG).show();
-		
-		//}*/
-		/*ListItem item;
-		cursor.moveToFirst();
-		while(cursor.moveToNext())
-		{
-			
-			String ssong=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-			/*int i=artists.indexOf(ssong);
-			if(i<0)*l
-			{
-				artists.add(ssong);
-				items.add(new ListItem(ssong));
-			}
-			//item=items.get(i);
-	
-				/*ssong=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-				
-				
-				if(albums.indexOf(ssong)<0)
-				{
-					albums.add(ssong);
-					item.addChild(new ListItem(ssong));
-				}
-			
-			ssong=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-			 //item=item.getChilds().get(i);
-		
-				//albums.add(ssong);
-				//item.addChild(new ListItem(ssong));
-			artists.add(ssong);
-		}
-			*/
-		//folder=getFolder(ssong);
-		/*if(folders.indexOf(
-		ListItem it=new ListItem(folder);
-		it.addChild(new ListItem(ssong));
-		*/
-		//return new AdresserAdapter(activity, artists);
-		return new LikeCursorAdapter(activity,cursor,"hh");
-		//return adapter = new MyCursorAdapter(activity,
-					//	 cursor,R.layout.rowlayout);
-	}
-	
 	static void initInfo(int position)
 	{
 		cursor.moveToPosition(position);
@@ -118,16 +51,21 @@ public class SongCorrector
 		
 	}
 	
-	static void renameSong()
+	static String renameSong(File thisFile, String newName)
 	{
-		if(file.getName()!=newFileName)//нужен метод с сравнением всех форматов
+		if(!thisFile.getName().equals(newName))//нужен метод с сравнением всех форматов
 		{
-			newFile= new File(folder+"/"+newFileName);
-			file.renameTo(newFile);
-			fileNames=file.getName();
+			try{
+			newFile= new File(FolderReader.getFolder(thisFile.getPath())+"/"+newName);
+			thisFile.renameTo(newFile);
+			
+			return newFile.getName();
+			}
+			catch(Exception e){return e.toString();}
 		}else
-		{
-			fileNames="Error";
+		{try{
+			return FolderReader.getFolder( thisFile.getPath());}
+			catch(Exception e){return e.toString();}
 		}
 		
 	}

@@ -329,7 +329,8 @@ public class LikeCursorAdapter extends BaseAdapter
 	void showExtra(SongItem adressF)
 	{
 		Intent intent=new Intent(ctxt,SongExt.class);
-		intent.putExtra(SongExt.EXTRA_ADRESS, adressF);
+		String[] meta={adressF.getTitle(),adressF.getExtra(),adressF.getAdress()};
+		intent.putExtra(SongExt.EXTRA_ADRESS, meta);
 		ctxt.startActivity(intent);
 	}
 }

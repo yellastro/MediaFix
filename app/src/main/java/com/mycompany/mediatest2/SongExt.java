@@ -9,6 +9,7 @@ import android.view.*;
 import android.widget.*;
 import com.mycompany.mediatest2.ierarhy.*;
 import java.io.*;
+import android.content.*;
 
 public class SongExt extends Activity
 {
@@ -23,6 +24,7 @@ public class SongExt extends Activity
 	File file;
 	String adresdF;
 	
+	
 	private String LOG_TAG;
 	@Override
 	public void onCreate(Bundle savedInstanceState )
@@ -30,21 +32,25 @@ public class SongExt extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.song_extra);
 		
-		//Intent intent = getIntent();
+		Intent intent = getIntent();
 		
-		 songI=(SongItem)getIntent().getExtras().get(EXTRA_ADRESS);
-		//songI =(SongItem)MainActivity.adapter.hierarchyArray.get(position).item;
-		adresdF=songI.getAdress();
+		String[] songMeta=intent.getStringArrayExtra(EXTRA_ADRESS);
+
+		adresdF=songMeta[2];
+		titel=songMeta[0];
+		artist=songMeta[1];
+		
 		MediaMetadataRetriever media=new MediaMetadataRetriever();
 		media.setDataSource(adresdF);
 		initInfo(media);
+		file=new File(adresdF);
 	}
 	
 	public void onRenameClick(View vv)
 	{
 		//readFile(file.getAbsolutePath());
-		SongCorrector.renameSong();
-		filenameView.setText(SongCorrector.fileNames);
+		filenameView.setText(SongCorrector.renameSong(file,newFileName));
+		
 	}
 	
 	void initInfo(MediaMetadataRetriever fileMedia)
@@ -80,20 +86,20 @@ public class SongExt extends Activity
 		fileMedia.extractMetadata(fileMedia.METADATA_KEY_TITLE);}
 		catch(Exception e){titel="пусто";}
 		*/
-		titel=songI.getTitle();
+		
 		//artist = fileMedia.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
 		//trackNo= cursor.getString(cursor.getColumnIndexppp(ppppppppMepdppppppppppppppiaStore.Audio.Media.TRACK));
 		//file=new File(adresdF);
 		//fileNames=file.getName();
 		
 		nameView.setText(titel);
-		//artistView.setText(artist);
-		//filenameView.setText(FolderReader.getName(adresdF));
+		artistView.setText(artist);
+		filenameView.setText(FolderReader.getName(adresdF));
 		folderView.setText(adresdF);
 		
-		//newFileName=titel+" - "+artist+".mp3";
+		newFileName=titel+" - "+artist+".mp3";
 		
-		//finalNameView.setText(SongCorrector.newFileName);
+		finalNameView.setText(newFileName);
 		
 		/*Uri playableUri
 			= Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, _id);
