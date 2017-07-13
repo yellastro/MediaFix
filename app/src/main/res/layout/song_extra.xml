@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#FFFFFF">
+
+	<LinearLayout
+		android:layout_height="50dp"
+		style="?android:attr/buttonBarStyle"
+		android:background="@color/main_midle"
+		android:text="gogogo"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+		<Button
+			android:layout_height="wrap_content"
+			style="?android:attr/buttonBarButtonStyle"
+			android:text="Bar Button"
+			android:layout_width="wrap_content"
+			android:ems="5"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:background="#FFFFFF">
+
+		<ImageView
+			android:id="@+id/song_extraImageView"
+			android:layout_height="120dp"
+			android:src="@drawable/albume"
+			android:layout_width="120dp"/>
+
+		<TextView
+			android:id="@+id/song_name"
+			android:layout_height="wrap_content"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:elevation="10dp"
+			android:gravity="center"
+			android:layout_marginTop="15dp"
+			android:icon="@drawable/song"
+			android:drawablePadding="10dp"/>
+			
+			
+
+		<TextView
+			
+			
+			android:id="@+id/song_autor"
+			android:layout_height="wrap_content"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:elevation="10dp"
+			android:gravity="center"
+			android:layout_marginTop="15dp"/>
+
+		<TextView
+			android:id="@+id/song_filename"
+			android:layout_height="wrap_content"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:elevation="10dp"
+			android:gravity="center"
+			android:layout_marginTop="15dp"/>
+
+		<TextView
+			android:id="@+id/song_fileFolder"
+			style="@style/RegularTextView"/>
+
+		<TextView
+			android:id="@+id/song_finalName"
+			android:layout_height="wrap_content"
+			android:text="Large Text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:background="#CF5CE2"
+			android:layout_marginTop="15dp"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		style="?android:attr/buttonBarStyle"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:gravity="center"
+		android:background="@color/main_midle"
+		android:layout_gravity="clip_vertical">
+
+		<Button
+			android:onClick="onRenameClick"
+			android:layout_height="wrap_content"
+			android:text="Rename"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="wrap_content"
+			android:background="@color/second_midle"
+			android:elevation="15dp"
+			android:shadowRadius="5"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

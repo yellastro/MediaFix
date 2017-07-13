@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+	</style>
+	
+	<style
+		name="RegularTextView" parent="@android:style/TextAppearance.Medium"> 
+        <item
+			name="android:textSize">18sp</item> 
+		<item 
+			name="android:layout_height">
+			wrap_content</item>
+		<item name="android:text">
+			Medium Text</item>
+		<item name="android:textColor">
+			#919191</item>
+		<item name="android:textAppearance">
+			?android:attr/textAppearanceMedium</item>
+		<item name="android:layout_width">
+			match_parent</item>
+		<item name="android:gravity">
+			center</item>
+    </style> 
+	
+	
+	<style name="toolbarButton" parent="@android:attr/buttonBarButtonStyle">
+		<item name=
+			"android:layout_margin">5dp</item>
+	<item name=
+		"android:scaleType">fitXY</item>
+	<item name=
+		"android:tint">#FFFFFF</item>
+	
+	</style>
+	
+	<color name="main_dark">#7B1FA2</color>
+	<color name="main_light">#BA68C8</color>
+	<color name="main_midle">#9C27B0</color>
+	<color name="second_dark">#c88719</color>
+	<color name="second_light">#ffe97d</color>
+	<color name="second_midle">#ff9800</color>
+	<style name="CustomTheme" parent="@android:style/Theme.Holo.NoActionBar">
+		
+		<item name="android:colorPrimary">
+			@color/main_midle</item>
+        <item name="android:colorPrimaryDark">
+			@color/main_dark</item>
+		<item name="android:textColor">
+			#000000</item>
+	</style>
+    
+</resources>
+
