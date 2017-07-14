@@ -63,7 +63,7 @@ public class MainActivity extends Activity
 	
 	static public LikeCursorAdapter adapter;
 	ListView listView;
-	SongCorrector songcorrector=new SongCorrector();
+	//SongCorrector songcorrector=new SongCorrector();
 	
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -124,5 +124,14 @@ public class MainActivity extends Activity
 		rootChose="/storage";
 		new UpdateDrinkTask().execute(rootChose);
 		
+	}
+	
+	public void onRenameSekectedClick(View v)
+	{
+		if(adapter.SetSongListToStatic())
+		{
+			Intent intent=new Intent(this, RenameListAct.class);
+			startActivity(intent);
+		}
 	}
 }

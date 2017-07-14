@@ -326,12 +326,28 @@ public class LikeCursorAdapter extends BaseAdapter
 		return true;
 	}
 	
-	void showExtra(SongItem adressF)
+	void showExtra(SongItem thisSong)
 	{
 		Intent intent=new Intent(ctxt,SongExt.class);
-		String[] meta={adressF.getTitle(),adressF.getExtra(),adressF.getAdress()};
+		String[] meta={thisSong.getTitle(),thisSong.getExtra(),thisSong.getAdress()};
 		intent.putExtra(SongExt.EXTRA_ADRESS, meta);
 		ctxt.startActivity(intent);
+	}
+	
+	public boolean SetSongListToStatic()
+	{
+		if (!selectedListItem.isEmpty())
+		{
+			for(Item i:selectedListItem)
+			{
+				if(i.getClass()==SongItem.class)
+				{
+					SongCorrector.items.add((SongItem)i);
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }
 

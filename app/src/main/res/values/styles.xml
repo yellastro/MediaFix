@@ -39,7 +39,7 @@
 	<color name="second_dark">#c88719</color>
 	<color name="second_light">#ffe97d</color>
 	<color name="second_midle">#ff9800</color>
-	<style name="CustomTheme" parent="@android:style/Theme.Holo.NoActionBar">
+	<style name="CustomTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
 		
 		<item name="android:colorPrimary">
 			@color/main_midle</item>

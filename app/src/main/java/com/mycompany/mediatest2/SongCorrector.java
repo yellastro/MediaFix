@@ -22,7 +22,7 @@ public class SongCorrector
 	static File file, newFile;
 	static ArrayList<String> artists=new ArrayList<>();
 	static ArrayList<String> albums=new ArrayList<>();
-	static ArrayList<ListItem> items=new ArrayList<>();
+	static ArrayList<SongItem> items=new ArrayList<>();
 	
 	
 	static void initInfo(int position)
@@ -49,6 +49,11 @@ public class SongCorrector
 		newFileName=titel+" - "+artist+".mp3";
 
 		
+	}
+	
+	public static String createNewName(SongItem s)
+	{
+		return s.getExtra()+" - "+s.getTitle()+".mp3";
 	}
 	
 	static String renameSong(File thisFile, String newName)
