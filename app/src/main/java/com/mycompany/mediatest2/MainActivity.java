@@ -62,6 +62,7 @@ public class MainActivity extends Activity
 	public String rootChose="/storage/sdcard0/Music";
 	
 	static public LikeCursorAdapter adapter;
+	static public FolderAdapter fAdapter;
 	ListView listView;
 	//SongCorrector songcorrector=new SongCorrector();
 	
@@ -74,6 +75,7 @@ public class MainActivity extends Activity
 
 		listView = (ListView) findViewById(R.id.mainListView);
 	
+		
 		//loadBase();
 	
 		new UpdateDrinkTask().execute(rootChose);
@@ -121,9 +123,22 @@ public class MainActivity extends Activity
 	{
 		cursor.deactivate();
 		
-		rootChose="/storage";
-		new UpdateDrinkTask().execute(rootChose);
+		/*RootDialog dialog = new RootDialog();
+        dialog.show(getFragmentManager(), "custom");
+    	*/
+		Button button=(Button) findViewById(R.id.bottomButton);
+		button.setText(R.string.root_button);
 		
+		fAdapter=new FolderAdapter(this,rootChose);
+		listView.setAdapter(fAdapter);
+		
+		
+		AdapterView.OnItemClickListener itemClickListener = 
+			new AdapterView.OnItemClickListener()
+		{ public void onItemClick(AdapterView<?> listView, View v, int position, long id)
+			{fAdapter.openFolder(position);}};
+			
+		listView.setOnItemClickListener(itemClickListener);
 	}
 	
 	public void onRenameSekectedClick(View v)

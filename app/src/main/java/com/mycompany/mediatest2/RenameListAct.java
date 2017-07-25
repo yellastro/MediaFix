@@ -1,15 +1,13 @@
 package com.mycompany.mediatest2;
-import android.app.*;
 import android.os.*;
-import android.os.AsyncTask;
-import android.content.*;
+import android.view.*;
 import android.widget.*;
 import com.mycompany.mediatest2.ierarhy.*;
-import java.util.concurrent.*;
-import android.view.*;
 import java.io.*;
+import java.util.concurrent.*;
+import android.app.*;
 
-public class RenameListAct extends Activity
+public class RenameListAct extends  Activity
 {
 	private class RunRenaimingTask extends AsyncTask<Void, Integer, Integer> 
 	{ 
@@ -69,12 +67,22 @@ public class RenameListAct extends Activity
 		collView=(TextView)findViewById(R.id.rename_list_coll_textview);
 		collView.setText("Rename "+Integer.toString(SongCorrector.items.size())
 			+" songs");
+		ListView list=(ListView)findViewById(R.id.rename_list_activutyListView);
+		
+		list.setAdapter(new RenameActAdapter(this,SongCorrector.items));
+		
+		
 	}
 	
 	public void onStartClick(View v)
 	{
 		RunRenaimingTask tread=new RunRenaimingTask();
 		tread.execute();
+	}
+	
+	public void onBackClick(View v)
+	{
+		finish();
 	}
 	
 }

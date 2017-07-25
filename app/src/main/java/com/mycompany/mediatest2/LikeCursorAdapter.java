@@ -167,7 +167,7 @@ public class LikeCursorAdapter extends BaseAdapter
 		{
 			view.setBackgroundResource(R.color.main_light);
 			img.setColorFilter(foldColor);
-			
+			//textViewTitle.setTextColor(Color.WHITE);
 			
 			txtViewLabel.setTextColor(Color.WHITE);
 			if(openListItems.contains(pair.item))

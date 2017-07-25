@@ -6,6 +6,6 @@
    
 
     <string name="app_name">MediaTest2</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="root_button">display /n this folder</string>
 
 </resources>
