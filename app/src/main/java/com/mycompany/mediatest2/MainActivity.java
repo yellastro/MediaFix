@@ -63,7 +63,8 @@ public class MainActivity extends Activity
 	
 	static public LikeCursorAdapter adapter;
 	static public FolderAdapter fAdapter;
-	ListView listView;
+	private ListView listView;
+	private Button bottomButton;
 	//SongCorrector songcorrector=new SongCorrector();
 	
     @Override
@@ -75,7 +76,9 @@ public class MainActivity extends Activity
 
 		listView = (ListView) findViewById(R.id.mainListView);
 	
-		
+		bottomButton=(Button) findViewById(R.id.bottomButton);
+		bottomButton.setOnClickListener(onRenameClickListener);
+		bottomButton.setText(R.string.start_list_rename);
 		//loadBase();
 	
 		new UpdateDrinkTask().execute(rootChose);
@@ -121,13 +124,15 @@ public class MainActivity extends Activity
 	
 	public void onRootClick(View v)
 	{
-		cursor.deactivate();
+		//cursor.deactivate();
 		
 		/*RootDialog dialog = new RootDialog();
         dialog.show(getFragmentManager(), "custom");
     	*/
-		Button button=(Button) findViewById(R.id.bottomButton);
-		button.setText(R.string.root_button);
+		
+		bottomButton.setText(R.string.root_button);
+		bottomButton.setOnClickListener(onRootClickListener);
+		bottomButton.refreshDrawableState();
 		
 		fAdapter=new FolderAdapter(this,rootChose);
 		listView.setAdapter(fAdapter);
@@ -139,9 +144,38 @@ public class MainActivity extends Activity
 			{fAdapter.openFolder(position);}};
 			
 		listView.setOnItemClickListener(itemClickListener);
+		
+		
+	}
+	private View.OnClickListener onRootClickListener = 
+	new View.OnClickListener()
+	{
+
+		@Override
+		public void onClick(View p1)
+		{
+			rootChose=fAdapter.getRoot();
+			new UpdateDrinkTask().execute(rootChose);
+			
+			bottomButton.setText(R.string.start_list_rename);
+			bottomButton.setOnClickListener(onRenameClickListener);
+			
+		}
+		};
+	public void onSetRoot(View v)
+	{
+		
 	}
 	
-	public void onRenameSekectedClick(View v)
+	private View.OnClickListener onRenameClickListener = 
+	new View.OnClickListener()
+	{
+
+		@Override
+		public void onClick(View p1)
+		{onRenameSelectedClick(p1);}};
+	
+	public void onRenameSelectedClick(View v)
 	{
 		if(adapter.SetSongListToStatic())
 		{

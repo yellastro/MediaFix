@@ -6,6 +6,8 @@
    
 
     <string name="app_name">MediaTest2</string>
-    <string name="root_button">display /n this folder</string>
+    <string name="root_button">display this folder</string>
+	<string name="start_list_rename">rename this</string>
+	<string name="list_extra_note"> items</string>
 
 </resources>
