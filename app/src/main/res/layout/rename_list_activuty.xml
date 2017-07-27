@@ -23,16 +23,8 @@
 			android:layout_alignParentLeft="true"
 			android:tint="#FFFFFF"
 			android:scaleType="fitXY"
-			style="?android:attr/buttonBarButtonStyle"/>
-
-		<TextView
-			android:id="@+id/rename_list_coll_textview"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:text="Rename XXX files"
-			android:textColor="#FFFFFF"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="150dp"/>
+			style="?android:attr/buttonBarButtonStyle"
+			android:id="@+id/renamelistactivutyImageButton1"/>
 
 		<ImageButton
 			android:id="@+id/rename_list_activutyImageButton"
@@ -47,6 +39,7 @@
 			android:src="@drawable/ic_settings_black_48dp"/>
 
 		<ImageButton
+			android:id="@+id/rename_list_act_numbutton"
 			android:layout_height="30dp"
 			android:layout_width="35dp"
 			android:src="@drawable/ic_numeric"
@@ -55,28 +48,42 @@
 			android:scaleType="fitXY"
 			style="?android:attr/buttonBarButtonStyle"/>
 
+		<TextView
+			android:id="@+id/rename_list_coll_textview"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_toLeftOf="@id/rename_list_act_numbutton"
+			android:text="Rename XXX files"
+			android:textColor="#FFFFFF"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="match_parent"
+			android:layout_toRightOf="@id/renamelistactivutyImageButton1"/>
+
 	</RelativeLayout>
 
-	<ListView
-		android:layout_below="@id/rename_list_activutyRelativeLayout"
-		android:id="@+id/rename_list_activutyListView"
-		android:layout_height="300dp"
-		android:layout_width="wrap_content"/>
-
-	<TextView
-		android:layout_height="wrap_content"
-		android:layout_below="@id/rename_list_activutyListView"
-		android:text="Rename format : artist - title"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:layout_margin="19dp"/>
-
 	<Button
+		android:id="@+id/rename_list_botButton"
 		android:onClick="onStartClick"
 		android:layout_height="wrap_content"
 		android:text="Go on"
 		android:layout_width="match_parent"
 		android:layout_alignParentBottom="true"/>
+
+	<TextView
+		android:id="@+id/rename_list_actDoptextView"
+		android:layout_height="wrap_content"
+		android:text="Rename format : artist - title"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:layout_margin="19dp"
+		android:layout_above="@id/rename_list_botButton"/>
+
+	<ListView
+		android:layout_below="@id/rename_list_activutyRelativeLayout"
+		android:id="@+id/rename_list_activutyListView"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_above="@id/rename_list_actDoptextView"/>
 
 </RelativeLayout>
 

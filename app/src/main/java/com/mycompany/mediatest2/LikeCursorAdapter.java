@@ -248,8 +248,8 @@ public class LikeCursorAdapter extends BaseAdapter
 		Item i = hierarchyArray.get(pos).item;
 		if(i.getClass()==SongItem.class)
 		{
-			
-			showExtra((SongItem)(i));
+			selectItem(pos);
+			//showExtra((SongItem)(i));
 		}
 		else{ListItem L=(ListItem)i;
 			if (!closeItem(L)) 
@@ -267,7 +267,7 @@ public class LikeCursorAdapter extends BaseAdapter
 		Item i = hierarchyArray.get(pos).item;
 		if(i.getClass()==SongItem.class)
 		{
-			if(!selectedListItem.remove((hierarchyArray.get(pos)).item))
+			if(!selectedListItem.remove(i))
 				selectedListItem.add((hierarchyArray.get(pos)).item);
 			
 		}
@@ -300,7 +300,7 @@ public class LikeCursorAdapter extends BaseAdapter
 			{
 				if(c.getClass()==ListItem.class)
 					selectTree((ListItem)c);
-				else selectedListItem.add(c);
+				else if(!selectedListItem.contains(c)) selectedListItem.add(c);
 			}
 		}
 		return false;
@@ -321,7 +321,13 @@ public class LikeCursorAdapter extends BaseAdapter
 	
 	public boolean longClick(int pos)
 	{
-		selectItem(pos);
+		Item i = hierarchyArray.get(pos).item;
+		if(i.getClass()==SongItem.class)
+		{
+			showExtra((SongItem)(i));
+		}
+		else{
+		selectItem(pos);}
 		
 		return true;
 	}
