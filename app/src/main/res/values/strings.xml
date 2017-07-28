@@ -9,5 +9,8 @@
     <string name="root_button">display this folder</string>
 	<string name="start_list_rename">rename this</string>
 	<string name="list_extra_note"> items</string>
+	<string name="stop_this">stop it</string>
+	<string name="goon_list">rename it all</string>
+	<string name="start_someth">starting...</string>
 
 </resources>
