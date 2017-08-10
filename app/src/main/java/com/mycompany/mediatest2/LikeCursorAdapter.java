@@ -29,9 +29,6 @@ public class LikeCursorAdapter extends BaseAdapter
 	private LayoutInflater mLayoutInflater;
 
 	public ArrayList<Pair> hierarchyArray; 
-	private ArrayList<Item> songzArray; //скорее всего он вобще не нужен
-
-	private ArrayList<String> artists;
 	private SearchingList originalListItems; // 3
 	private LinkedList<ListItem> openListItems; // 4
 	private LinkedList<Item> selectedListItem;
@@ -39,86 +36,22 @@ public class LikeCursorAdapter extends BaseAdapter
 	
 	private ArrayList<Item> topLevelList;
 	private Context ctxt;
-	private String rootChose;
-	public void setRoot(String r){rootChose=r;}
-	
-	public Cursor cursor;
 	
 	private int selectColor;
 
     // Default constructor
-    public LikeCursorAdapter(Context ctx //ArrayList<ListItem> ListItems) {  
-		,Cursor crs,String r) throws UnsupportedEncodingException{
-			ctxt=ctx;
-			rootChose=r;
-		cursor=crs;
+    public LikeCursorAdapter(Context ctx,ArrayList<Item> topList,String noNeedetString) 
+	{  
+		ctxt=ctx;
 		mLayoutInflater = LayoutInflater.from(ctx);
-		originalListItems = new SearchingList(); 
-
-		songzArray=new ArrayList<>();
 		hierarchyArray = new ArrayList<>();
 		openListItems = new LinkedList<>(); 
 		topLevelList = new ArrayList<>();
 		selectedListItem = new LinkedList<>();
 		
 		selectColor=ctxt.getResources().getColor(R.color.second_midle);
-
-		ListItem file=new ListItem("","");
-		String adress,title;
-		//artists = new ArrayList<>();
-		if(!cursor.moveToFirst())
-			return;
-			
 		
-		adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-		title=utf_eight_to_web(
-			URLEncoder.encode(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-			,uCode));
-		
-		
-		Item songit =new SongItem(title,adress,utf_eight_to_web(URLEncoder.encode(
-				 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),uCode)));
-		//songzArray.add(songit);
-		//artists.add(adress);
-		
-		while(!adress.equals(rootChose))
-		{
-			adress=FolderReader.getFolder(adress);
-			title=FolderReader.getName(adress);
-			file =new ListItem(title,adress);
-			originalListItems.add(file);
-			file.addChild(songit);
-			songit=file;
-			//artists.add(adress);
-		}
-		
-		
-		topLevelList=(file.getChilds());
-		
-		
-		
-		while(cursor.moveToNext())
-		{
-
-			title=utf_eight_to_web(
-				(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-			   ));
-			adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-			SongItem topFile =new SongItem(title,adress,
-				utf_eight_to_web(
-						  cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
-			//songzArray.add(topFile);
-			//artists.add(adress);
-			scanData(adress,topFile);
-			
-		
-			//artists.add(ssong);
-			
-			
-			//originalListItems.add(new ListItem(adress));
-		}
-		
-		
+		topLevelList=topList;
 		generateHierarchy(); // 5
 	}  
 

@@ -14,21 +14,21 @@ import android.content.*;
 import com.mycompany.mediatest2.ierarhy.*;
 import java.io.*;
 import android.text.style.*;
+import java.util.*;
 
 
 
 public class MainActivity extends Activity 
 {
-	private class UpdateDrinkTask extends AsyncTask<String, Void, Cursor> 
+	private class UpdateDrinkTask extends AsyncTask<String, Void, IerarhyList> 
 	{ 
 		ContentValues rootValue;
 		protected void onPreExecute()
 		{
-			//String roott=rootChose;
 			rootValue = new ContentValues();
 			rootValue.put("FAVORITE", rootChose);
 		}
-		protected Cursor doInBackground(String... rooot) 
+		protected IerarhyList doInBackground(String... rooot) 
 		{ 
 			cursor = getContentResolver().query(
 					MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -36,18 +36,49 @@ public class MainActivity extends Activity
 					"_data LIKE ?",
 					new String[] {rootChose+"%"},
 					MediaStore.Audio.Media.DATA);
-				
-				return cursor;
+					
+			if(!cursor.moveToFirst())
+				return null;
+
+			String adress,title,artist;
+			adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+			title=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+			artist=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+
+			Item songit =new SongItem(title,adress,artist);
+		
+			ListItem file=new ListItem("","");
+
+			IerarhyList IeList=new IerarhyList();
+			while(!adress.equals(rootChose))
+			{
+				adress=FolderReader.getFolder(adress);
+				title=FolderReader.getName(adress);
+				file =new ListItem(title,adress);
+				IeList.originalListItems.add(file);
+				file.addChild(songit);
+				songit=file;
+			}
+			IeList
+			.topLevelList=(file.getChilds());
+			
+			while(cursor.moveToNext())
+			{
+
+				adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+				title=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+				artist=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+				Item topFile =new SongItem(title,adress,artist);
+				cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+				IeList.getTopFile(adress,topFile);
+			}
+			return IeList;
 		}
 		
-		protected void onPostExecute(Cursor success)  
+		protected void onPostExecute(IerarhyList ieL)  
 		{
-			try
-			{
-				adapter = new LikeCursorAdapter(MainActivity.this, success, rootChose);
-			}
-			catch (UnsupportedEncodingException e)
-			{}
+			adapter = new LikeCursorAdapter(MainActivity.this, ieL.topLevelList, rootChose);
+		
 			listView.setAdapter(adapter);
 
 			AdapterView.OnItemClickListener itemClickListener = 
@@ -96,35 +127,6 @@ public class MainActivity extends Activity
 		new UpdateDrinkTask().execute(rootChose);
     }
 	
-	void loadBase() throws UnsupportedEncodingException
-	{
-		cursor = getContentResolver().query(
-			MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-			null,
-			"_data LIKE ?",
-			new String[] {rootChose+"%"},
-			MediaStore.Audio.Media.DATA);
-		
-		
-		
-		adapter=new LikeCursorAdapter(this,cursor,rootChose);
-		listView.setAdapter(adapter);
-			
-		AdapterView.OnItemClickListener itemClickListener = 
-			new AdapterView.OnItemClickListener()
-			{ public void onItemClick(AdapterView<?> listView, View v, int position, long id)
-				{adapter.clickOnItem(position);}};
-
-		listView.setOnItemClickListener(itemClickListener);
-		AdapterView.OnItemLongClickListener longClickListener =
-			new AdapterView.OnItemLongClickListener()
-		{ public boolean onItemLongClick(AdapterView<?> listView, View v, int position, long id)
-			{return adapter.longClick(position);}};
-			
-		listView.setOnItemLongClickListener(longClickListener);
-		
-		cursor=adapter.cursor;
-	}
 	
 	void showExtra(int position,SongItem ss)
 	{

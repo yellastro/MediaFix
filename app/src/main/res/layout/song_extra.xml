@@ -1,33 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:background="#FFFFFF">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-	<LinearLayout
+	<RelativeLayout
+		android:id="@+id/extraActbarLayout"
 		android:layout_height="50dp"
 		style="?android:attr/buttonBarStyle"
 		android:background="@color/main_midle"
-		android:text="gogogo"
 		android:layout_width="match_parent"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:gravity="right|center"
+		android:layout_alignParentTop="true">
+
+		<ImageButton
+			android:layout_height="30dp"
+			android:layout_width="35dp"
+			android:src="@drawable/ic_arrow_left"
+			android:layout_margin="10dp"
+			android:layout_alignParentLeft="true"
+			android:tint="#FFFFFF"
+			android:scaleType="fitXY"
+			style="?android:attr/buttonBarButtonStyle"
+			android:id="@+id/main_title_icon"/>
+
+		<ImageButton
+			android:id="@+id/main_settingbutton"
+			android:layout_height="30dp"
+			android:layout_width="35dp"
+			android:layout_margin="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_alignParentRight="true"
+			android:tint="#FFFFFF"
+			android:scaleType="fitXY"
+			style="?android:attr/buttonBarButtonStyle"
+			android:src="@drawable/ic_settings_black_48dp"/>
 
 		<Button
 			android:layout_height="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
-			android:text="Bar Button"
+			android:text="RightM"
+			android:layout_centerInParent="true"
+			android:textColor="#FFFFFF"
 			android:layout_width="wrap_content"
-			android:ems="5"/>
+			android:ems="5"
+			android:layout_margin="10dp"
+			android:layout_toRightOf="@id/main_title_icon"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:id="@+id/extra_botBar"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:layout_alignParentBottom="true"
+		style="?android:attr/buttonBarStyle"
+		android:background="@color/main_midle"
+		android:gravity="center">
+
+		<Button
+			android:onClick="onRenameClick"
+			android:layout_height="wrap_content"
+			android:text="Rename"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="wrap_content"
+			android:background="@color/second_midle"
+			android:elevation="15dp"
+			android:shadowRadius="5"/>
 
 	</LinearLayout>
 
-	<LinearLayout
+	<RelativeLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="#FFFFFF">
+		android:layout_below="@id/extraActbarLayout"
+		android:layout_above="@id/extra_botBar">
 
 		<ImageView
 			android:id="@+id/song_extraImageView"
@@ -45,13 +95,10 @@
 			android:gravity="center"
 			android:layout_marginTop="15dp"
 			android:icon="@drawable/song"
-			android:drawablePadding="10dp"/>
-			
-			
+			android:drawablePadding="10dp"
+			android:layout_toRightOf="@id/song_extraImageView"/>
 
 		<TextView
-			
-			
 			android:id="@+id/song_autor"
 			android:layout_height="wrap_content"
 			android:text="Large Text"
@@ -59,7 +106,9 @@
 			android:layout_width="match_parent"
 			android:elevation="10dp"
 			android:gravity="center"
-			android:layout_marginTop="15dp"/>
+			android:layout_marginTop="15dp"
+			android:layout_alignLeft="@id/song_name"
+			android:layout_below="@id/song_name"/>
 
 		<TextView
 			android:id="@+id/song_filename"
@@ -69,11 +118,15 @@
 			android:layout_width="match_parent"
 			android:elevation="10dp"
 			android:gravity="center"
-			android:layout_marginTop="15dp"/>
+			android:layout_marginTop="15dp"
+			android:layout_toEndOf="@id/song_autor"
+			android:layout_below="@id/song_autor"
+			android:layout_alignLeft="@id/song_autor"/>
 
 		<TextView
 			android:id="@+id/song_fileFolder"
-			style="@style/RegularTextView"/>
+			style="@style/RegularTextView"
+			android:layout_below="@id/song_filename"/>
 
 		<TextView
 			android:id="@+id/song_finalName"
@@ -82,30 +135,17 @@
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="match_parent"
 			android:background="#CF5CE2"
-			android:layout_marginTop="15dp"/>
+			android:layout_alignParentBottom="true"/>
 
-	</LinearLayout>
-
-	<LinearLayout
-		android:layout_height="wrap_content"
-		style="?android:attr/buttonBarStyle"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:gravity="center"
-		android:background="@color/main_midle"
-		android:layout_gravity="clip_vertical">
-
-		<Button
-			android:onClick="onRenameClick"
+		<TextView
 			android:layout_height="wrap_content"
-			android:text="Rename"
-			style="?android:attr/buttonBarButtonStyle"
+			android:text="@string/what_we_got"
+			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:layout_width="wrap_content"
-			android:background="@color/second_midle"
-			android:elevation="15dp"
-			android:shadowRadius="5"/>
+			android:layout_marginTop="20dp"
+			android:layout_above="@id/song_finalName"/>
 
-	</LinearLayout>
+	</RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
 

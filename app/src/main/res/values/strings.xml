@@ -14,6 +14,10 @@
 	<string name="start_someth">starting...</string>
 	<string name="pick_some">pick some songs , cmon</string>
 	<string name="help_changeroot">
-		here you can chose main folder of your songs</string>
+		here you can chose main folder of your songs
+	</string>
+	<string name="what_we_got">
+		here ur new filename. like it?
+	</string>
 
 </resources>
