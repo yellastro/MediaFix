@@ -4,6 +4,9 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
+	
+	
+	
 
 	<RelativeLayout
 		android:id="@+id/mainActbarLayout"
@@ -13,6 +16,17 @@
 		android:layout_width="match_parent"
 		android:orientation="horizontal"
 		android:gravity="right|center">
+		
+		<ImageButton
+			android:layout_height="30dp"
+			android:layout_width="35dp"
+			android:src="@drawable/correct_icon"
+			android:layout_margin="10dp"
+			android:layout_alignParentLeft="true"
+			android:tint="#FFFFFF"
+			android:scaleType="fitXY"
+			style="?android:attr/buttonBarButtonStyle"
+			android:id="@+id/main_title_icon"/>
 
 		<ImageButton
 			android:id="@+id/main_settingbutton"

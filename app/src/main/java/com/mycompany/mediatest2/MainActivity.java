@@ -12,6 +12,9 @@ import android.widget.*;
 
 import android.content.*;
 import com.mycompany.mediatest2.ierarhy.*;
+import java.io.*;
+import android.text.style.*;
+
 
 
 public class MainActivity extends Activity 
@@ -37,9 +40,14 @@ public class MainActivity extends Activity
 				return cursor;
 		}
 		
-		protected void onPostExecute(Cursor success) 
+		protected void onPostExecute(Cursor success)  
 		{
-			adapter=new LikeCursorAdapter(MainActivity.this,success,rootChose);
+			try
+			{
+				adapter = new LikeCursorAdapter(MainActivity.this, success, rootChose);
+			}
+			catch (UnsupportedEncodingException e)
+			{}
 			listView.setAdapter(adapter);
 
 			AdapterView.OnItemClickListener itemClickListener = 
@@ -59,12 +67,13 @@ public class MainActivity extends Activity
 	}
 	
 	private Cursor cursor;
-	public String rootChose="/storage/sdcard0/Music";
+	private String rootChose;//="/storage/sdcard0";
 	
 	static public LikeCursorAdapter adapter;
 	static public FolderAdapter fAdapter;
 	private ListView listView;
 	private Button bottomButton;
+	private ImageButton titelButton;
 	//SongCorrector songcorrector=new SongCorrector();
 	
     @Override
@@ -72,19 +81,22 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-		
+		rootChose= Environment.getExternalStorageDirectory().toString();
 
 		listView = (ListView) findViewById(R.id.mainListView);
 	
 		bottomButton=(Button) findViewById(R.id.bottomButton);
 		bottomButton.setOnClickListener(onRenameClickListener);
 		bottomButton.setText(R.string.start_list_rename);
+		
+		titelButton=(ImageButton)findViewById(R.id.main_title_icon);
+		
 		//loadBase();
 	
 		new UpdateDrinkTask().execute(rootChose);
     }
 	
-	void loadBase()
+	void loadBase() throws UnsupportedEncodingException
 	{
 		cursor = getContentResolver().query(
 			MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -134,6 +146,8 @@ public class MainActivity extends Activity
 		bottomButton.setOnClickListener(onRootClickListener);
 		bottomButton.refreshDrawableState();
 		
+		titelButton.setImageResource(R.drawable.arrow_left_bold);
+		
 		fAdapter=new FolderAdapter(this,rootChose);
 		listView.setAdapter(fAdapter);
 		
@@ -160,6 +174,8 @@ public class MainActivity extends Activity
 			bottomButton.setText(R.string.start_list_rename);
 			bottomButton.setOnClickListener(onRenameClickListener);
 			
+			titelButton.setImageResource(R.drawable.correct_icon);
+			
 		}
 		};
 	public void onSetRoot(View v)
@@ -182,5 +198,8 @@ public class MainActivity extends Activity
 			Intent intent=new Intent(this, RenameListAct.class);
 			startActivity(intent);
 		}
+		else
+			Toast.makeText(getApplicationContext(), getResources().getString(R.string.pick_some), Toast.LENGTH_SHORT) 
+				.show();
 	}
 }

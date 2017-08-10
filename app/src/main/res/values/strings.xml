@@ -12,5 +12,8 @@
 	<string name="stop_this">stop it</string>
 	<string name="goon_list">rename it all</string>
 	<string name="start_someth">starting...</string>
+	<string name="pick_some">pick some songs , cmon</string>
+	<string name="help_changeroot">
+		here you can chose main folder of your songs</string>
 
 </resources>

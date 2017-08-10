@@ -9,6 +9,8 @@ import java.util.*;
 import android.view.ViewDebug.*;
 import android.graphics.*;
 import android.widget.LinearLayout.*;
+import java.net.*;
+import java.io.*;
 
 public class LikeCursorAdapter extends BaseAdapter
 {
@@ -23,7 +25,7 @@ public class LikeCursorAdapter extends BaseAdapter
 		} 
 	};
 	
-	
+	private final String uCode="UTF-16";
 	private LayoutInflater mLayoutInflater;
 
 	public ArrayList<Pair> hierarchyArray; 
@@ -37,7 +39,7 @@ public class LikeCursorAdapter extends BaseAdapter
 	
 	private ArrayList<Item> topLevelList;
 	private Context ctxt;
-	private String rootChose="/storage/sdcard0/Music";
+	private String rootChose;
 	public void setRoot(String r){rootChose=r;}
 	
 	public Cursor cursor;
@@ -46,7 +48,7 @@ public class LikeCursorAdapter extends BaseAdapter
 
     // Default constructor
     public LikeCursorAdapter(Context ctx //ArrayList<ListItem> ListItems) {  
-		,Cursor crs,String r){
+		,Cursor crs,String r) throws UnsupportedEncodingException{
 			ctxt=ctx;
 			rootChose=r;
 		cursor=crs;
@@ -64,14 +66,18 @@ public class LikeCursorAdapter extends BaseAdapter
 		ListItem file=new ListItem("","");
 		String adress,title;
 		//artists = new ArrayList<>();
-		cursor.moveToFirst();
+		if(!cursor.moveToFirst())
+			return;
+			
 		
 		adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-		title=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+		title=utf_eight_to_web(
+			URLEncoder.encode(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+			,uCode));
 		
 		
-		Item songit =new SongItem(title,adress,
-			 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+		Item songit =new SongItem(title,adress,utf_eight_to_web(URLEncoder.encode(
+				 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),uCode)));
 		//songzArray.add(songit);
 		//artists.add(adress);
 		
@@ -94,10 +100,13 @@ public class LikeCursorAdapter extends BaseAdapter
 		while(cursor.moveToNext())
 		{
 
-			title=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+			title=utf_eight_to_web(
+				(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+			   ));
 			adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
 			SongItem topFile =new SongItem(title,adress,
-					  cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+				utf_eight_to_web(
+						  cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
 			//songzArray.add(topFile);
 			//artists.add(adress);
 			scanData(adress,topFile);
@@ -354,6 +363,34 @@ public class LikeCursorAdapter extends BaseAdapter
 			return true;
 		}
 		return false;
+	}
+	
+	private final String noReadable="_Xyita_encode_";
+	private String utf_eight_to_web(String str)
+    {
+        String ans = "";
+        Character c;
+		int j=0;
+        for(int i = 0;i<str.length();i++)
+        {
+            c = str.charAt(i);
+            if (c <= 127)
+            {
+				if(j!=0)
+				{ans+="_";
+					j=0;}
+                ans += str.charAt(i);
+            }
+            else
+            {
+                ans +=noReadable.charAt(j);
+				j++;
+				if(j==noReadable.length())
+					j=0;
+            }
+        }
+		j=0;
+        return ans;
 	}
 }
 
