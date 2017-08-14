@@ -34,6 +34,7 @@ public class MainActivity extends Activity
 					
 			if(!cursor.moveToFirst())
 				return null;
+			
 
 			String adress,title,artist;
 			adress=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
@@ -72,6 +73,7 @@ public class MainActivity extends Activity
 		
 		protected void onPostExecute(IerarhyList ieL)  
 		{
+			if(ieL==null){return;}
 			adapter = new LikeCursorAdapter(MainActivity.this, ieL.topLevelList, rootChose);
 		
 			listView.setAdapter(adapter);

@@ -22,5 +22,8 @@
 	<string name="i_cant">
 		i cant man. i just cant
 	</string>
+	<string name="in_curr_dir">
+		in current directory
+	</string>
 
 </resources>
