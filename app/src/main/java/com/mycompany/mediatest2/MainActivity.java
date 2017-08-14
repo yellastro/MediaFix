@@ -1,20 +1,15 @@
 package com.mycompany.mediatest2;
 
 import android.app.*;
+import android.content.*;
 import android.database.*;
-import android.net.*;
 import android.os.*;
-import android.os.AsyncTask;
 import android.provider.*;
-
+import android.util.*;
 import android.view.*;
 import android.widget.*;
-
-import android.content.*;
 import com.mycompany.mediatest2.ierarhy.*;
 import java.io.*;
-import android.text.style.*;
-import java.util.*;
 
 
 
@@ -99,12 +94,16 @@ public class MainActivity extends Activity
 	
 	private Cursor cursor;
 	private String rootChose;//="/storage/sdcard0";
+	public static final String extrDir=Environment.getExternalStorageDirectory().toString();
 	
 	static public LikeCursorAdapter adapter;
 	static public FolderAdapter fAdapter;
+	private final String settFileName="Settings";
 	private ListView listView;
 	private Button bottomButton;
 	private ImageButton titelButton;
+	private FileOutputStream outputStream;
+	
 	//SongCorrector songcorrector=new SongCorrector();
 	
     @Override
@@ -112,7 +111,7 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-		rootChose= Environment.getExternalStorageDirectory().toString();
+		
 
 		listView = (ListView) findViewById(R.id.mainListView);
 	
@@ -123,7 +122,34 @@ public class MainActivity extends Activity
 		titelButton=(ImageButton)findViewById(R.id.main_title_icon);
 		
 		//loadBase();
-	
+		
+		// открываем поток для чтения
+		try {
+			// открываем поток для чтения
+			BufferedReader br = 
+				new BufferedReader(new InputStreamReader(
+				openFileInput(settFileName)));
+			String str = "";
+			
+			// читаем содержимое
+			rootChose=br.readLine();
+		} catch (FileNotFoundException e) 
+		{
+			rootChose=extrDir;
+			try
+			{
+				outputStream = openFileOutput(settFileName, Context.MODE_PRIVATE);
+				outputStream.write(rootChose.getBytes());
+				outputStream.close();
+			}
+			catch (Exception ej)
+			{
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		new UpdateDrinkTask().execute(rootChose);
     }
 	
@@ -135,6 +161,10 @@ public class MainActivity extends Activity
 		
 		startActivity(intent);
 	}
+	private AdapterView.OnItemClickListener itemClickListener = 
+	new AdapterView.OnItemClickListener()
+	{ public void onItemClick(AdapterView<?> listView, View v, int position, long id)
+		{fAdapter.openFolder(position);}};
 	
 	public void onRootClick(View v)
 	{
@@ -147,17 +177,13 @@ public class MainActivity extends Activity
 		bottomButton.setText(R.string.root_button);
 		bottomButton.setOnClickListener(onRootClickListener);
 		bottomButton.refreshDrawableState();
-		
-		titelButton.setImageResource(R.drawable.arrow_left_bold);
-		
-		fAdapter=new FolderAdapter(this,rootChose);
+		isRootChoseNow=true;
+		titelButton.setImageResource(R.drawable.ic_arrow_left);
+		//titelButton.setOnClickListener(вот жесть, как же мне надоели эти костыли
+		//почему я блин не сделаю фрейм или фрагмент или чо там
+		fAdapter=new FolderAdapter(this,rootChose,cursor);
 		listView.setAdapter(fAdapter);
-		
-		
-		AdapterView.OnItemClickListener itemClickListener = 
-			new AdapterView.OnItemClickListener()
-		{ public void onItemClick(AdapterView<?> listView, View v, int position, long id)
-			{fAdapter.openFolder(position);}};
+	
 			
 		listView.setOnItemClickListener(itemClickListener);
 		
@@ -171,18 +197,37 @@ public class MainActivity extends Activity
 		public void onClick(View p1)
 		{
 			rootChose=fAdapter.getRoot();
-			new UpdateDrinkTask().execute(rootChose);
+			try
+			{
+				outputStream = openFileOutput(settFileName, Context.MODE_PRIVATE);
+				outputStream.write(rootChose.getBytes());
+				outputStream.close();
+			}
+			catch (Exception ej)
+			{
+				ej.printStackTrace();
+			}
 			
-			bottomButton.setText(R.string.start_list_rename);
-			bottomButton.setOnClickListener(onRenameClickListener);
-			
-			titelButton.setImageResource(R.drawable.correct_icon);
-			
+			onBackToMain();
 		}
 		};
-	public void onSetRoot(View v)
+	private void onBackToMain()
 	{
-		
+		new UpdateDrinkTask().execute(rootChose);
+		bottomButton.setText(R.string.start_list_rename);
+		bottomButton.setOnClickListener(onRenameClickListener);
+		titelButton.setImageResource(R.drawable.correct_icon);
+		isRootChoseNow=false;
+	}
+	
+	private boolean isRootChoseNow;
+	@Override
+	public void onBackPressed() 
+	{
+		if (isRootChoseNow)
+			onBackToMain();
+		else
+			super.onBackPressed();
 	}
 	
 	private View.OnClickListener onRenameClickListener = 
