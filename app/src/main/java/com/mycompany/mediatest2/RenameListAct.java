@@ -30,9 +30,14 @@ public class RenameListAct extends  Activity
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				 }publishProgress(i);
+				 if(SongCorrector.isRandomSuffle)
 				 SongCorrector.renameSong(
-				 	new File(s.getAdress()),
+				 	new File(s.getAdress()),SongCorrector.randomInd[i-1]+
 					SongCorrector.createNewName(s));
+				else
+					SongCorrector.renameSong(
+						new File(s.getAdress()),
+						SongCorrector.createNewName(s));
 				
 			}
 			return i;
