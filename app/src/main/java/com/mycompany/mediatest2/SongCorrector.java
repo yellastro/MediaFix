@@ -24,6 +24,9 @@ public class SongCorrector
 	static ArrayList<String> albums=new ArrayList<>();
 	static ArrayList<SongItem> items=new ArrayList<>();
 	
+	public static String[] randomInd;
+	public static boolean isRandomSuffle=false;
+	
 	
 	static void initInfo(int position)
 	{

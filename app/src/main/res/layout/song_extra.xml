@@ -38,6 +38,8 @@
 			style="?android:attr/buttonBarButtonStyle"
 			android:src="@drawable/ic_settings_black_48dp"/>
 
+		
+
 		<Button
 			android:layout_height="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"

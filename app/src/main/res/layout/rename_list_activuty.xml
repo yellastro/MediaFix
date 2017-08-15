@@ -39,20 +39,22 @@
 			android:src="@drawable/ic_settings_black_48dp"/>
 
 		<ImageButton
-			android:id="@+id/rename_list_act_numbutton"
+			android:id="@+id/rename_list_random"
+			
 			android:layout_height="30dp"
 			android:layout_width="35dp"
-			android:src="@drawable/ic_numeric"
 			android:layout_margin="10dp"
+			android:layout_marginRight="10dp"
 			android:layout_toLeftOf="@id/rename_list_activutyImageButton"
 			android:scaleType="fitXY"
-			style="?android:attr/buttonBarButtonStyle"/>
+			style="?android:attr/buttonBarButtonStyle"
+			android:src="@drawable/ic_shuffle"/>
 
 		<TextView
 			android:id="@+id/rename_list_coll_textview"
 			android:layout_height="wrap_content"
 			android:layout_centerInParent="true"
-			android:layout_toLeftOf="@id/rename_list_act_numbutton"
+			android:layout_toLeftOf="@id/rename_list_random"
 			android:text="Rename XXX files"
 			android:textColor="#FFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"
