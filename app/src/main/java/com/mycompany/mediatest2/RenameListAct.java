@@ -30,11 +30,7 @@ public class RenameListAct extends  Activity
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				 }publishProgress(i);
-				 if(SongCorrector.isRandomSuffle)
-				 SongCorrector.renameSong(
-				 	new File(s.getAdress()),SongCorrector.randomInd[i-1]+
-					SongCorrector.createNewName(s));
-				else
+				 
 					SongCorrector.renameSong(
 						new File(s.getAdress()),
 						SongCorrector.createNewName(s));
@@ -88,7 +84,7 @@ public class RenameListAct extends  Activity
 		finalList=SongCorrector.items;
 		randomInd=new String[finalList.size()];
 		
-		SongCorrector.randomInd=randomInd;
+		NumericPreffixCorrector.randomInd=randomInd;
 		collView=(TextView)findViewById(R.id.rename_list_coll_textview);
 		collView.setText("Rename "+Integer.toString(SongCorrector.items.size())
 			+" songs");
@@ -100,6 +96,7 @@ public class RenameListAct extends  Activity
 		ImageButton randbutton=(ImageButton)findViewById(R.id.rename_list_random);
 		randbutton.setOnClickListener(onShufleRr);
 		//onShuffleClick(randbutton);
+		SongCorrector.correctrs[0]=new MetaOfNameCorrector();
 	}
 	
 	public void onStartClick(View v)
@@ -137,13 +134,15 @@ public class RenameListAct extends  Activity
 				ind=Integer.toString(rInd.remove(k))+" - ";
 				randomInd[i]=ind;
 			}
-			SongCorrector.randomInd=randomInd;
+			SongCorrector.correctrs[1]=new NumericPreffixCorrector();
+			NumericPreffixCorrector.randomInd=randomInd;
 			SongCorrector.isRandomSuffle=true;
 			
 		}
 		else
 		{
-			SongCorrector.randomInd=new String[finalList.size()];
+			SongCorrector.correctrs[1]=null;
+			NumericPreffixCorrector.randomInd=new String[finalList.size()];
 			SongCorrector.isRandomSuffle = false;
 			}
 		adapt.notifyDataSetChanged();

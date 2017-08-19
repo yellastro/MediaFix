@@ -23,8 +23,9 @@ public class SongCorrector
 	static ArrayList<String> artists=new ArrayList<>();
 	static ArrayList<String> albums=new ArrayList<>();
 	static ArrayList<SongItem> items=new ArrayList<>();
+	static Correctors[] correctrs=new Correctors[2];
 	
-	public static String[] randomInd;
+	
 	public static boolean isRandomSuffle=false;
 	
 	
@@ -54,9 +55,29 @@ public class SongCorrector
 		
 	}
 	
+	public static void enableRenameSettings(String sett)
+	{
+		switch (sett)
+		{
+		case "num":
+			correctrs[1]=(new NumericPreffixCorrector());
+			
+		case "meta":
+			correctrs[0]=(new MetaOfNameCorrector());
+		default :
+			break;
+		}
+		
+	}
+	
 	public static String createNewName(SongItem s)
 	{
-		return s.getExtra()+" - "+s.getTitle()+".mp3";
+		//String newSongName;
+		for ( Correctors Cc: correctrs)
+		{
+			Cc.correct(s);
+		}
+		return s.newSongName;
 	}
 	
 	static String renameSong(File thisFile, String newName)

@@ -4,7 +4,7 @@ import android.os.*;
 
 public class SongItem implements Item, Parcelable
 {
-	
+	public String newSongName;
 	private int mData;
 	@Override
 	public int describeContents()
